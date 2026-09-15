@@ -1,4 +1,3 @@
-import Avatar from "@galaxy-io/dls/avatar/Avatar";
 import Button, {
   ButtonSize,
   ButtonVariant,
@@ -52,13 +51,6 @@ function Home() {
         backgroundColor: theme.color.background.base,
       }}
     >
-      <div style={{ position: "absolute", top: 16, left: 16 }}>
-        <Avatar
-          img="https://mitchbregs.com/files/avatar.png"
-          size={24}
-          seed="mitchbregs"
-        />
-      </div>
       <div style={{ position: "absolute", top: 16, right: 16 }}>
         <Button
           icon={isDark ? SunIcon : MoonIcon}
@@ -71,28 +63,23 @@ function Home() {
         />
       </div>
       <div style={{ position: "relative", width: 50, height: 50 }}>
-        <GalaxyLogomark3D
-          height={50}
-          isAutoRotate
-          speed={2}
-          color={theme.color.background.baseAlt}
-          material={{
-            clearcoatRoughness: 1,
-          }}
-        />
         <a
           href={LOGO_LINK}
           aria-label="Mitch Bregman"
           style={{
-            position: "absolute",
-            left: "11%",
-            top: "11%",
-            width: "78%",
-            height: "78%",
-            borderRadius: "50%",
             cursor: "pointer",
           }}
-        />
+        >
+          <GalaxyLogomark3D
+            height={50}
+            isAutoRotate
+            speed={2}
+            color={theme.color.background.baseAlt}
+            material={{
+              clearcoatRoughness: 1,
+            }}
+          />
+        </a>
       </div>
       <div
         style={{
