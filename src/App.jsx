@@ -2,14 +2,15 @@ import Button, {
   ButtonSize,
   ButtonVariant,
 } from "@galaxy-io/dls/buttons/Button";
-import GalaxyWordmark from "@galaxy-io/dls/icons/GalaxyWordmark";
-import GalaxyLogomark3D from "@galaxy-io/dls/icons/GalaxyLogomark3D";
+import GalaxyLogomark3D from "@galaxy-io/dls/brand/GalaxyLogomark3D";
+import GalaxyWordmark from "@galaxy-io/dls/brand/GalaxyWordmark";
+import { IconWeight } from "@galaxy-io/dls/icons/Icon";
+import Text, { TextSize, TextVariant } from "@galaxy-io/dls/text/Text";
+import GalaxyProvider from "@galaxy-io/dls/theme/GalaxyProvider";
+import { FontFamily, GalaxyTheme } from "@galaxy-io/dls/theme/enums";
+import { useGalaxyTheme } from "@galaxy-io/dls/theme/useGalaxyTheme";
 import {
-  GalaxyTheme,
-  GalaxyThemeProvider,
-  useGalaxyTheme,
-} from "@galaxy-io/dls/theme";
-import {
+  CalendarBlankIcon,
   GithubLogoIcon,
   LinkedinLogoIcon,
   MoonIcon,
@@ -18,6 +19,7 @@ import {
 } from "@phosphor-icons/react";
 
 const LOGO_LINK = "https://getgalaxy.io";
+const BOOK_TIME_LINK = "https://cal.com/mitchbregs/30min";
 
 const SOCIALS = [
   {
@@ -38,7 +40,7 @@ const SOCIALS = [
 ];
 
 function Home() {
-  const { theme, activeTheme, setTheme } = useGalaxyTheme();
+  const { activeTheme, setTheme } = useGalaxyTheme();
   const isDark = activeTheme === GalaxyTheme.DARK;
   return (
     <div
@@ -48,15 +50,34 @@ function Home() {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: theme.color.background.base,
+        backgroundColor: "var(--gx-color-background-base)",
       }}
     >
+      <div
+        style={{
+          position: "absolute",
+          top: 16,
+          left: 16,
+          height: 24,
+          display: "flex",
+          alignItems: "center",
+        }}
+      >
+        <Text
+          family={FontFamily.MONO}
+          size={TextSize.BODY_MD}
+          variant={TextVariant.SECONDARY}
+        >
+          mitchbregs
+        </Text>
+      </div>
       <div style={{ position: "absolute", top: 16, right: 16 }}>
         <Button
           icon={isDark ? SunIcon : MoonIcon}
+          ariaLabel={isDark ? "Switch to light theme" : "Switch to dark theme"}
           variant={ButtonVariant.TERTIARY}
           size={ButtonSize.SMALL}
-          isIconFilled
+          iconWeight={IconWeight.FILL}
           onClick={() => {
             setTheme(isDark ? GalaxyTheme.LIGHT : GalaxyTheme.DARK);
           }}
@@ -70,15 +91,7 @@ function Home() {
             cursor: "pointer",
           }}
         >
-          <GalaxyLogomark3D
-            height={50}
-            isAutoRotate
-            speed={2}
-            color={theme.color.background.baseAlt}
-            material={{
-              clearcoatRoughness: 1,
-            }}
-          />
+          <GalaxyLogomark3D size={50} isAutoRotate speed={2} />
         </a>
       </div>
       <div
@@ -97,12 +110,20 @@ function Home() {
             ariaLabel={label}
             variant={ButtonVariant.SECONDARY}
             size={ButtonSize.SMALL}
-            isIconFilled
+            iconWeight={IconWeight.FILL}
             onClick={() => {
               window.open(href, "_blank");
             }}
           />
         ))}
+        <Button
+          icon={CalendarBlankIcon}
+          label="Let's chat"
+          href={BOOK_TIME_LINK}
+          isExternal
+          variant={ButtonVariant.SECONDARY}
+          size={ButtonSize.SMALL}
+        />
       </div>
       <a
         href={LOGO_LINK}
@@ -117,7 +138,7 @@ function Home() {
           cursor: "pointer",
         }}
       >
-        <GalaxyWordmark height={16} />
+        <GalaxyWordmark size={16} ariaLabel="" />
       </a>
     </div>
   );
@@ -125,14 +146,8 @@ function Home() {
 
 export default function App() {
   return (
-    <GalaxyThemeProvider
-      initialTheme={GalaxyTheme.DARK}
-      storage={{
-        get: (key) => localStorage.getItem(key),
-        set: (key, value) => localStorage.setItem(key, value),
-      }}
-    >
+    <GalaxyProvider theme={GalaxyTheme.DARK}>
       <Home />
-    </GalaxyThemeProvider>
+    </GalaxyProvider>
   );
 }
