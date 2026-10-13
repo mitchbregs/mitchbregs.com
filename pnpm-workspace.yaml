@@ -1,4 +1,0 @@
-allowBuilds:
-  esbuild: set this to true or false
-minimumReleaseAgeExclude:
-  - '@galaxy-io/dls@2.11.1'
